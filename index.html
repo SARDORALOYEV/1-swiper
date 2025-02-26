@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Watches</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.5s ease-in-out;
+            background: linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%);
+        }
+        .watch-container {
+            position: relative;
+            overflow: hidden;
+            width: 350px;
+            height: 350px;
+        }
+        .watch-image {
+            position: absolute;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body id="body" class="h-screen flex flex-col">
+    <header class="w-full p-6 flex flex-wrap justify-between items-center md:px-16">
+        <div class="flex items-center gap-2">
+            <img src="./images/Logo (5).png" alt="Logo" class="h-8">
+        </div>
+        <nav class="flex gap-6 text-black font-medium flex-wrap">
+            <a href="#" class="hover:text-red-500">Shop</a>
+            <a href="#" class="hover:text-red-500">Brands</a>
+            <a href="#" class="hover:text-red-500">Contact us</a>
+            <button class="px-6 py-2 bg-black text-white rounded-full hover:bg-red-500"><a href="./login.html">Sign Up</a></button>
+        </nav>
+    </header>
+    
+    <main class="flex flex-col md:flex-row flex-1 items-center justify-between px-6 md:px-16 text-center md:text-left">
+        <div id="watchInfo" class="max-w-md mb-8 md:mb-0">
+            <h1 class="text-4xl md:text-5xl font-bold">Exquisite Watches</h1>
+            <h3 class="text-xl md:text-2xl font-semibold mt-2">Choose Luxury, <span class="text-black font-bold">Choose Us</span></h3>
+            <p class="mt-4 text-gray-800">Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch</p>
+            <p id="watchPrice" class="text-2xl md:text-3xl font-bold mt-4">$430.00</p>
+        </div>
+        
+        <div class="relative">
+        <div class="watch-container">
+            <img id="watchImage" src="./images/watch1.png" alt="Luxury Watch" class="watch-image">
+        </div>
+        <div class="absolute top-1/2 -left-6 md:-left-10 transform -translate-y-1/2">
+            <button onclick="prevImage()" class="p-2 bg-white rounded-full shadow-md">&#9665;</button>
+        </div>
+        <div class="absolute top-1/2 -right-6 md:-right-10 transform -translate-y-1/2">
+            <button onclick="nextImage()" class="p-2 bg-white rounded-full shadow-md">&#9655;</button>
+        </div>
+    </div>
+    </main>
+
+    <script>
+        const watches = [
+            { image: "./images/watch1.png", price: "$430.00", background: "linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%)" },
+            { image: "./images/watch2.png", price: "$520.00", background: "linear-gradient(105.54deg, #A764F4 -2.93%, #C2DEFF 72.14%)" },
+            { image: "./images/watch3.png", price: "$610.00", background: "linear-gradient(105.54deg, #64F4A7 -2.93%, #C2FFDE 72.14%)" }
+        ];
+        
+        let currentIndex = 0;
+        let watchImage = document.getElementById("watchImage");
+        let body = document.getElementById("body");
+        let watchPrice = document.getElementById("watchPrice");
+
+        function updateContent(direction) {
+            watchImage.style.transform = `translateX(${direction === 'next' ? '-100%' : '100%'})`;
+            watchImage.style.opacity = 0;
+            setTimeout(() => {
+                currentIndex = (direction === 'next') ? (currentIndex + 1) % watches.length : (currentIndex - 1 + watches.length) % watches.length;
+                watchImage.src = watches[currentIndex].image;
+                watchPrice.textContent = watches[currentIndex].price;
+                body.style.background = watches[currentIndex].background;
+                watchImage.style.transform = `translateX(${direction === 'next' ? '100%' : '-100%'})`;
+                watchImage.style.opacity = 1;
+                setTimeout(() => {
+                    watchImage.style.transform = 'translateX(0)';
+                }, 50);
+            }, 500);
+        }
+
+        function nextImage() {
+            updateContent('next');
+        }
+
+        function prevImage() {
+            updateContent('prev');
+        }
+    </script>
+</body>
+</html>
